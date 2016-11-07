@@ -7,7 +7,9 @@ import com.manywho.sdk.services.controllers.AbstractDataController;
 import com.manywho.services.box.managers.DataManager;
 import com.manywho.services.box.managers.FolderManager;
 import com.manywho.services.box.managers.TaskManager;
+import com.manywho.services.box.managers.UserManager;
 import com.manywho.services.box.types.*;
+
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -26,6 +28,9 @@ public class DataController extends AbstractDataController {
 
     @Inject
     private TaskManager taskManager;
+
+    @Inject
+    private UserManager userManager;
 
     @Override
     public ObjectDataResponse delete(ObjectDataRequest objectDataRequest) throws Exception {
@@ -70,6 +75,8 @@ public class DataController extends AbstractDataController {
                 throw new RuntimeException("Saving the type File isn't supported");
             case "$File":
                 throw new RuntimeException("Saving the type $File isn't supported");
+            case UserApp.NAME:
+                return new ObjectDataResponse(userManager.createAppUser(objectDataRequest));
             case Comment.NAME:
                 throw new RuntimeException("Saving the type Comment isn't supported");
             default:

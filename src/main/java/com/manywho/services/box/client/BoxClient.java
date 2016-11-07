@@ -42,7 +42,7 @@ public class BoxClient {
                                             String signatureSecondary, String payload, String deliveryTimestamp ) {
 
         return webhookSingatureValidator.validateWebhookSignature(signatureVersion, algorithm, signaturePrimary,
-                 signatureSecondary, payload, deliveryTimestamp);
+                signatureSecondary, payload, deliveryTimestamp);
     }
 
     public BoxAPIConnection confirmUserAuthentication(String accessToken) {
@@ -130,6 +130,11 @@ public class BoxClient {
         updateCredentials(boxAPIConnection, accessToken);
 
         return users;
+    }
+
+    public BoxUser.Info createAppUser(String enterpriseId, String name) throws IOException {
+        BoxAPIConnection boxAPIConnection = createDeveloperApiConnection(enterpriseId);
+        return BoxUser.createAppUser(boxAPIConnection, name);
     }
 
     public Iterable<BoxItem.Info> searchByMetadata(String accessToken, String metadataType, MetadataSearch metadataSearch) {
@@ -246,7 +251,7 @@ public class BoxClient {
         BoxAPIConnection boxAPIConnection;
         boxAPIConnection = boxFacade.createApiConnection(credentials.getAccessToken(), credentials.getRefreshToken());
 
-         if(boxAPIConnection.getRefreshToken() != null && !Objects.equals(credentials.getRefreshToken(), boxAPIConnection.getRefreshToken())) {
+        if(boxAPIConnection.getRefreshToken() != null && !Objects.equals(credentials.getRefreshToken(), boxAPIConnection.getRefreshToken())) {
             try {
                 cacheManager.saveCredentials(credentials.getBoxUserId(), credentials);
             } catch (Exception e) {

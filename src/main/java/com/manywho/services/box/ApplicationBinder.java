@@ -63,5 +63,7 @@ public class ApplicationBinder extends AbstractBinder {
         bind(WebhookSingatureValidator.class).to(WebhookSingatureValidator.class);
         bind(BoxFacade.class).to(BoxFacadeInterface.class);
         bind(SystemInteraction.class).to(SystemInteractionInterface.class);
+        bind(UserManager.class).to(UserManager.class);
+        bind(UserService.class).to(UserService.class);
     }
 }

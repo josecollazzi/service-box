@@ -85,6 +85,32 @@ public class ObjectMapperService {
         return object;
     }
 
+    public Object convertBoxUserApp(BoxUser.Info userInfo) {
+        PropertyCollection properties = new PropertyCollection();
+        properties.add(new Property("ID", userInfo.getID()));
+        properties.add(new Property("Name", userInfo.getName()));
+        properties.add(new Property("Login", userInfo.getLogin()));
+        properties.add(new Property("Created At", userInfo.getCreatedAt()));
+        properties.add(new Property("Modified At", userInfo.getModifiedAt()));
+        properties.add(new Property("Language", userInfo.getLanguage()));
+        properties.add(new Property("Timezone", userInfo.getTimezone()));
+        properties.add(new Property("Space Amount", userInfo.getSpaceAmount()));
+        properties.add(new Property("Space Used", userInfo.getSpaceUsed()));
+        properties.add(new Property("Max Upload Size", userInfo.getMaxUploadSize()));
+        properties.add(new Property("Status", userInfo.getStatus()));
+        properties.add(new Property("Job Title", userInfo.getJobTitle()));
+        properties.add(new Property("Phone", userInfo.getPhone()));
+        properties.add(new Property("Address", userInfo.getAddress()));
+        properties.add(new Property("Avatar Url", userInfo.getAvatarURL()));
+
+        Object object = new Object();
+        object.setDeveloperName(UserApp.NAME);
+        object.setExternalId(userInfo.getID());
+        object.setProperties(properties);
+
+        return object;
+    }
+
 
     public Object convertBoxTaskAssignment(BoxTaskAssignment.Info taskAssignmentInfo, BoxFile.Info fileInfo) {
         PropertyCollection properties = new PropertyCollection();
