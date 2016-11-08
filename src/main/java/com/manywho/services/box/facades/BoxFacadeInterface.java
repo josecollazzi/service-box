@@ -7,4 +7,5 @@ public interface BoxFacadeInterface {
     BoxAPIConnection createApiConnection(String authorizationCode);
     BoxAPIConnection createApiConnection(String accessToken, String refreshToken);
     BoxDeveloperEditionAPIConnection createDeveloperApiConnection(String enterpriseId);
+    BoxDeveloperEditionAPIConnection createDeveloperApiUserConnection(String userId);
 }

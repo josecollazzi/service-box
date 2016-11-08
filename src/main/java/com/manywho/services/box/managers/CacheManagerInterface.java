@@ -47,4 +47,8 @@ public interface CacheManagerInterface {
     void saveAuthenticatedWhoForWebhook(String webhookId, String state, AuthenticatedWho authenticatedWho) throws Exception;
 
     void deleteAuthenticatedWhoForWebhook(String webhookId, String state);
+
+    void saveContextToUserApp(String stateId, String userAppId) throws Exception;
+
+    String getContextToUserApp(String stateId) throws Exception;
 }

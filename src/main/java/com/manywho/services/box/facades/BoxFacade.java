@@ -60,4 +60,28 @@ public class BoxFacade implements BoxFacadeInterface {
                 tokenCacheService.getAccessTokenCache()
         );
     }
+
+    @Override
+    public BoxDeveloperEditionAPIConnection createDeveloperApiUserConnection(String userId) {
+        String privateKey;
+
+        try {
+            privateKey = systemInteraction.getFileContent(securityConfiguration.getPrivateKeyLocation());
+        } catch (IOException e) {
+            throw new RuntimeException("Error executing server to server connection");
+        }
+
+        JWTEncryptionPreferences encryptionPreferences = new JWTEncryptionPreferences();
+        encryptionPreferences.setEncryptionAlgorithm(EncryptionAlgorithm.RSA_SHA_256);
+        encryptionPreferences.setPrivateKey(privateKey);
+        encryptionPreferences.setPrivateKeyPassword(securityConfiguration.getPrivateKeyPassword());
+
+        return  BoxDeveloperEditionAPIConnection.getAppUserConnection(
+                userId,
+                securityConfiguration.getOauth2DeveloperEditionClientId(),
+                securityConfiguration.getOauth2DeveloperEditionClientSecret(),
+                encryptionPreferences,
+                tokenCacheService.getAccessTokenCache()
+        );
+    }
 }

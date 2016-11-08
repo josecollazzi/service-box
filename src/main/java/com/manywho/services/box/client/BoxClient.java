@@ -72,6 +72,12 @@ public class BoxClient {
         return boxFolder;
     }
 
+    public BoxFolder getFolder(BoxDeveloperEditionAPIConnection connection, String id) {
+        BoxFolder boxFolder = new BoxFolder(connection, id);
+
+        return boxFolder;
+    }
+
     public PartialCollection<BoxItem.Info>  getFolders(String accessToken, BoxSearchParameters searchParameters) {
         BoxAPIConnection boxAPIConnection = createApiConnection(accessToken);
         PartialCollection<BoxItem.Info> boxFolders = new BoxSearch(createApiConnection(accessToken)).searchRange(0, 500, searchParameters);

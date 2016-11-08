@@ -1,5 +1,6 @@
 package com.manywho.services.box.managers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.manywho.sdk.entities.run.elements.config.ListenerServiceRequest;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
@@ -28,6 +29,8 @@ public class CacheManager implements CacheManagerInterface{
     protected final static String REDIS_BOX_WEBHOOK = "service:box:webhook:targettype:%s:targetid:%s";
 
     protected final static String REDIS_BOX_FLOW_LISTENING = "service:box:flow-listener-request:targettype:%s:targetid:%s:trigger:%s";
+
+    protected final static String REDIS_BOX_USERAPP_STATEID = "service:box:userapp:stateid:%s";
 
     protected final static String REDIS_BOX_CREDENTIALS = "service:box:user:%s:credentials";
     protected final static String REDIS_BOX_TOKEN_AS_A_KEY = "service:box:user:token:%s";
@@ -269,5 +272,25 @@ public class CacheManager implements CacheManagerInterface{
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.del(key);
         }
+    }
+
+    public void saveContextToUserApp(String stateId, String userAppId) throws JsonProcessingException {
+        String key = String.format(REDIS_BOX_USERAPP_STATEID, stateId);
+
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.set(key, objectMapper.writeValueAsString(userAppId));
+        }
+    }
+
+    public String getContextToUserApp(String stateId) throws Exception {
+        try (Jedis jedis = jedisPool.getResource()) {
+            String key = jedis.get(String.format(REDIS_BOX_USERAPP_STATEID, stateId));
+
+            if (StringUtils.isNotEmpty(key)) {
+                return objectMapper.readValue(key, String.class);
+            }
+        }
+
+        return null;
     }
 }

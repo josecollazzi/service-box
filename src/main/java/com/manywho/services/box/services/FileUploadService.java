@@ -1,5 +1,6 @@
 package com.manywho.services.box.services;
 
+import com.box.sdk.BoxDeveloperEditionAPIConnection;
 import com.box.sdk.BoxFile;
 import com.manywho.sdk.entities.run.elements.type.FileDataRequest;
 import com.manywho.services.box.client.BoxClient;
@@ -41,6 +42,17 @@ public class FileUploadService {
         // Get the incoming file as a stream, then upload it to Box into the specified folder
         try (InputStream inputStream = filePart.getEntityAs(BodyPartEntity.class).getInputStream()) {
             return boxClient.getFolder(token, uploadPath)
+                    .uploadFile(inputStream, filePart.getContentDisposition().getFileName());
+        }
+    }
+
+    public BoxFile.Info uploadFileToBox(BoxDeveloperEditionAPIConnection connection, FileDataRequest fileDataRequest, BodyPart filePart) throws IOException {
+        // Get the desired upload path from the FileDataRequest, and set to the root folder on Box if not specified
+        String uploadPath = StringUtils.isNotEmpty(fileDataRequest.getResourcePath()) ? fileDataRequest.getResourcePath() : "0";
+
+        // Get the incoming file as a stream, then upload it to Box into the specified folder
+        try (InputStream inputStream = filePart.getEntityAs(BodyPartEntity.class).getInputStream()) {
+            return boxClient.getFolder(connection, uploadPath)
                     .uploadFile(inputStream, filePart.getContentDisposition().getFileName());
         }
     }

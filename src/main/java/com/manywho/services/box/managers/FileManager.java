@@ -1,5 +1,6 @@
 package com.manywho.services.box.managers;
 
+import com.box.sdk.BoxDeveloperEditionAPIConnection;
 import com.box.sdk.BoxFile;
 import com.box.sdk.BoxFolder;
 import com.box.sdk.BoxItem;
@@ -9,11 +10,14 @@ import com.manywho.sdk.entities.run.elements.type.*;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.InvokeType;
 import com.manywho.sdk.services.PropertyCollectionParser;
+import com.manywho.services.box.entities.Configuration;
 import com.manywho.services.box.entities.actions.FileCopy;
 import com.manywho.services.box.entities.actions.FileMove;
 import com.manywho.services.box.client.BoxClient;
+import com.manywho.services.box.facades.BoxFacadeInterface;
 import com.manywho.services.box.services.FileService;
 import com.manywho.services.box.services.FileUploadService;
+import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.media.multipart.BodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
@@ -30,12 +34,28 @@ public class FileManager {
     private PropertyCollectionParser propertyParser;
 
     @Inject
+    private CacheManagerInterface cacheManager;
+
+    @Inject
     private BoxClient boxClient;
+
+    @Inject
+    private BoxFacadeInterface boxFacade;
 
     public ObjectDataResponse uploadFile(AuthenticatedWho authenticatedWho, FileDataRequest fileDataRequest, FormDataMultiPart formDataMultiPart) throws Exception {
         BodyPart bodyPart = fileUploadService.getFilePart(formDataMultiPart);
+        Configuration configuration = propertyParser.parse(fileDataRequest.getConfigurationValues(), Configuration.class);
+        String userAppId = cacheManager.getContextToUserApp(fileDataRequest.getStateId());
+
+        String token = authenticatedWho.getToken();
+
+        if (!StringUtils.isEmpty(userAppId)) {
+            BoxDeveloperEditionAPIConnection connection = boxFacade.createDeveloperApiUserConnection(userAppId);
+            token = connection.getAccessToken();
+        }
+
         if (bodyPart != null) {
-            BoxFile.Info fileInformation = fileUploadService.uploadFileToBox(authenticatedWho.getToken(), fileDataRequest, bodyPart);
+            BoxFile.Info fileInformation = fileUploadService.uploadFileToBox(token, fileDataRequest, bodyPart);
             if (fileInformation != null) {
                 return new ObjectDataResponse(fileService.buildManyWhoFileObject(fileInformation, fileInformation.getResource()));
             }
