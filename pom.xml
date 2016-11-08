@@ -43,9 +43,9 @@
             <version>1.25.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.box</groupId>
+            <groupId>com.github.manywho</groupId>
             <artifactId>box-java-sdk</artifactId>
-            <version>2.1.0</version>
+            <version>6afc7ee07807d04e897be38531b727d4da5356ed</version>
         </dependency>
         <dependency>
             <groupId>org.graylog2.log4j2</groupId>
