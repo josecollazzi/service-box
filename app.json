@@ -18,6 +18,10 @@
       "description": "The Client Id of the ManyWho Application in box",
       "value": ""
     },
+    "OAUTH2_CONTENT_API_CLIENT_SECRET": {
+      "description": "The Client Secret of the ManyWho Application in box",
+      "value": ""
+    },
     "OAUTH2_DEVELOPER_EDITION_CLIENT_ID": {
       "description": "The Client Id of the ManyWho (server-to-server) Application in box",
       "value": ""
