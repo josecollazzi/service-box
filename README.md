@@ -13,7 +13,7 @@ Java Cryptography Extension (JCE) Unlimited Strength
 
 The service is compatible with Heroku, and can be deployed by clicking the button below:
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/manywho/service-box/tree/develop)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/josecollazzi/service-box/tree/develop)
 
 To build the service, you will need to have Apache Ant, Maven 3 and a Java 8 implementation installed, OpenJDK or Oracle JDK with Java Cryptography Extension (JCE) Unlimited
 

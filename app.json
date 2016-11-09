@@ -3,5 +3,51 @@
   "description": "A plugin that enables integration of Box into ManyWho Flows",
   "repository": "https://github.com/manywho/service-box",
   "logo": "https://s3.amazonaws.com/manywho-service-assets/icons/service-box.png",
-  "keywords": ["manywho", "box", "plugin", "workflow"]
+  "keywords": ["manywho", "box", "plugin", "workflow"],
+  "env": {
+    "secure.privateKeyLocation": {
+      "description": "The path to the private key used by the box app in server to server requests",
+      "value": ""
+    },
+    "secure.privateKeyPassword": {
+      "description": "The password used for the private key",
+      "value": ""
+    },
+    "oauth2.contentApi.clientId": {
+      "description": "The Client Id of the ManyWho Application in box",
+      "value": ""
+    },
+    "oauth2.developerEdition.clientId": {
+      "description": "The Client Id of the ManyWho (server-to-server) Application in box",
+      "value": ""
+    },
+    "oauth2.developerEdition.clientSecret": {
+      "description": "The Client Secret of the ManyWho (server-to-server) Application in box",
+      "value": ""
+    },
+    "assignment.flowId": {
+      "description": "Flow Id used when a webhook is created from box",
+      "value": "56bc48bb-23ec-4e8b-a02f-9495a7738802"
+    },
+    "assignment.flowVersionId": {
+      "description": "Flow Version Id used when a webhook is created from box",
+      "value": "f305045c-a320-4d5b-8482-fb1526a240e3"
+    },
+    "assignment.tenantId": {
+      "description": "Tenant Id used when a webhook is created from box",
+      "value": "2d925770-d411-42b9-9ea3-7ce669397d82"
+    },
+    "redis.url": {
+      "description": "Redis url to be used by this service",
+      "value": ""
+    },
+    "webhook.signature.primary.key": {
+      "description": "Key used to check if the webhooks request really come from box",
+      "value": ""
+    },
+    "webhook.signature.secondary.key": {
+      "description": "Secondary Key used to check if the webhooks request really come from box",
+      "value": ""
+    }
+  }
 }
