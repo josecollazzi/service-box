@@ -16,6 +16,6 @@ public class RedisConfig implements RedisConfiguration {
 
     @Override
     public int getPort() {
-        return 6379;
+        return 0;
     }
 }
