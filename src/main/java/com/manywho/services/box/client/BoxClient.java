@@ -138,9 +138,14 @@ public class BoxClient {
         return users;
     }
 
-    public BoxUser.Info createAppUser(String enterpriseId, String name) throws IOException {
+    public BoxUser.Info createAppUser(String enterpriseId, String name, Long spaceAmount) throws IOException {
         BoxAPIConnection boxAPIConnection = createDeveloperApiConnection(enterpriseId);
-        return BoxUser.createAppUser(boxAPIConnection, name);
+        CreateUserParams params = new CreateUserParams();
+
+        params.setSpaceAmount(spaceAmount);
+        params.setIsExemptFromDeviceLimits(true);
+
+        return BoxUser.createAppUser(boxAPIConnection, name, params);
     }
 
     public Iterable<BoxItem.Info> searchByMetadata(String accessToken, String metadataType, MetadataSearch metadataSearch) {

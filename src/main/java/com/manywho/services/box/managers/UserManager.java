@@ -30,7 +30,8 @@ public class UserManager {
         if (userAppCreate != null) {
             BoxUser.Info userAppInfo = userService.createUserApp(
                     configuration.getEnterpriseId(),
-                    userAppCreate.getName()
+                    userAppCreate.getName(),
+                    userAppCreate.getSpaceAmount()
             );
 
             return objectMapperService.convertBoxUserApp(userAppInfo);

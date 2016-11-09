@@ -56,7 +56,7 @@ public class DataManager {
         // at the moment only support list of the files for the root directory
         String folderId = "0";
 
-        return fileManager.loadFiles(user, folderId);
+        return fileManager.loadFiles(user, objectDataRequest.getStateId(), folderId);
     }
 
     public ObjectCollection loadFolderType(AuthenticatedWho user, ObjectDataRequest objectDataRequest) throws Exception {

@@ -44,7 +44,6 @@ public class FileManager {
 
     public ObjectDataResponse uploadFile(AuthenticatedWho authenticatedWho, FileDataRequest fileDataRequest, FormDataMultiPart formDataMultiPart) throws Exception {
         BodyPart bodyPart = fileUploadService.getFilePart(formDataMultiPart);
-        Configuration configuration = propertyParser.parse(fileDataRequest.getConfigurationValues(), Configuration.class);
         String userAppId = cacheManager.getContextToUserApp(fileDataRequest.getStateId());
 
         String token = authenticatedWho.getToken();
@@ -64,8 +63,16 @@ public class FileManager {
         throw new Exception("A file was not provided to upload to Box");
     }
 
-    public ObjectCollection loadFiles(AuthenticatedWho authenticatedWho, String resourcePath) {
-        BoxFolder folder = boxClient.getFolder(authenticatedWho.getToken(), resourcePath);
+    public ObjectCollection loadFiles(AuthenticatedWho authenticatedWho, String stateId, String resourcePath) throws Exception {
+        String userAppId = cacheManager.getContextToUserApp(stateId);
+        BoxFolder folder;
+
+        if (!StringUtils.isEmpty(userAppId)) {
+            BoxDeveloperEditionAPIConnection connection = boxFacade.createDeveloperApiUserConnection(userAppId);
+            folder = boxClient.getFolder(connection, resourcePath);
+        } else {
+            folder = boxClient.getFolder(authenticatedWho.getToken(), resourcePath);
+        }
 
         ObjectCollection files = new ObjectCollection();
 

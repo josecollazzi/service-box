@@ -13,8 +13,9 @@ public class UserService {
         this.boxClient = boxClient;
     }
 
-    public BoxUser.Info createUserApp(String enterpriseID, String name) throws Exception {
-        BoxUser.Info user = boxClient.createAppUser(enterpriseID, name);
+    public BoxUser.Info createUserApp(String enterpriseID, String name, Long spaceAmount) throws Exception {
+        BoxUser.Info user = boxClient.createAppUser(enterpriseID, name, spaceAmount);
+
         if (user == null) {
             throw new Exception("Unable to create an user with the name " + name);
         }

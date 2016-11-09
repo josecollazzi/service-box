@@ -3,7 +3,6 @@ package com.manywho.services.box.controllers;
 import com.manywho.sdk.entities.run.elements.config.ServiceRequest;
 import com.manywho.sdk.entities.run.elements.config.ServiceResponse;
 import com.manywho.sdk.entities.run.elements.type.FileDataRequest;
-import com.manywho.sdk.entities.run.elements.type.ObjectCollection;
 import com.manywho.sdk.entities.run.elements.type.ObjectDataResponse;
 import com.manywho.sdk.services.annotations.AuthorizationRequired;
 import com.manywho.sdk.services.controllers.AbstractController;
@@ -45,8 +44,7 @@ public class FileController extends AbstractController {
     @AuthorizationRequired
     public ObjectDataResponse loadFiles(FileDataRequest fileDataRequest) throws Exception {
         String selectedFolder = StringUtils.isNotEmpty(fileDataRequest.getResourcePath()) ? fileDataRequest.getResourcePath() : "0";
-        return new ObjectDataResponse(new ObjectCollection());
-        //return new ObjectDataResponse(fileManager.loadFiles(getAuthenticatedWho(), selectedFolder));
+        return new ObjectDataResponse(fileManager.loadFiles(getAuthenticatedWho(), fileDataRequest.getStateId(), selectedFolder));
     }
 
     @POST

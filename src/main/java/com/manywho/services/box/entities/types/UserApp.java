@@ -32,13 +32,13 @@ public class UserApp {
     private String tiemzone;
 
     @Property("Space Amount")
-    private Integer spaceAmount;
+    private Long spaceAmount;
 
     @Property("Space Used")
-    private Integer spaceUsed;
+    private Long spaceUsed;
 
     @Property("Max Upload Size")
-    private Integer maxUploadSize;
+    private Long maxUploadSize;
 
     @Property("Status")
     private String status;
@@ -83,15 +83,15 @@ public class UserApp {
         return tiemzone;
     }
 
-    public Integer getSpaceAmount() {
+    public Long getSpaceAmount() {
         return spaceAmount;
     }
 
-    public Integer getSpaceUsed() {
+    public Long getSpaceUsed() {
         return spaceUsed;
     }
 
-    public Integer getMaxUploadSize() {
+    public Long getMaxUploadSize() {
         return maxUploadSize;
     }
 
