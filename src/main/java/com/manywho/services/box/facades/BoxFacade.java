@@ -39,13 +39,7 @@ public class BoxFacade implements BoxFacadeInterface {
 
     @Override
     public BoxDeveloperEditionAPIConnection createDeveloperApiConnection(String enterpriseId) {
-        String privateKey;
-
-        try {
-            privateKey = systemInteraction.getFileContent(securityConfiguration.getPrivateKeyLocation());
-        } catch (IOException e) {
-            throw new RuntimeException("Error executing server to server connection");
-        }
+        String privateKey = securityConfiguration.getPrivateKeyLocation();
 
         JWTEncryptionPreferences encryptionPreferences = new JWTEncryptionPreferences();
         encryptionPreferences.setEncryptionAlgorithm(EncryptionAlgorithm.RSA_SHA_256);
@@ -63,13 +57,7 @@ public class BoxFacade implements BoxFacadeInterface {
 
     @Override
     public BoxDeveloperEditionAPIConnection createDeveloperApiUserConnection(String userId) {
-        String privateKey;
-
-        try {
-            privateKey = systemInteraction.getFileContent(securityConfiguration.getPrivateKeyLocation());
-        } catch (IOException e) {
-            throw new RuntimeException("Error executing server to server connection");
-        }
+        String privateKey = securityConfiguration.getPrivateKeyLocation();
 
         JWTEncryptionPreferences encryptionPreferences = new JWTEncryptionPreferences();
         encryptionPreferences.setEncryptionAlgorithm(EncryptionAlgorithm.RSA_SHA_256);

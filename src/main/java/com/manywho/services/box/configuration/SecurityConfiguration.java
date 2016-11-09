@@ -28,9 +28,7 @@ public class SecurityConfiguration extends ServiceConfigurationDefault {
         return this.get("oauth2.developerEdition.clientSecret");
     }
 
-    public String getPrivateKeyLocation() {
-        return this.get("secure.privateKeyLocation");
-    }
+    public String getPrivateKeyLocation() {return this.get("secure.privateKey");}
 
     public String getPrivateKeyPassword() {
         return this.get("secure.privateKeyPassword");
