@@ -320,7 +320,7 @@ public class BoxClient {
         }
     }
 
-    private Credentials getLastCredentials(String accessTokenKey) {
+    public Credentials getLastCredentials(String accessTokenKey) {
         try {
             Credentials credentials = cacheManager.getCredentialsByTokenKey(accessTokenKey);
             if (credentials == null) {
