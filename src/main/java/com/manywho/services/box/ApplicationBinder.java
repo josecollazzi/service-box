@@ -25,7 +25,7 @@ public class ApplicationBinder extends AbstractBinder {
     @Override
     protected void configure() {
         bind(BoxProvider.class).to(AbstractOauth2Provider.class);
-        bind(RedisConfig.class).to(RedisConfiguration.class).in(Singleton.class);
+        bind(RedisConfig.class).to(RedisConfiguration.class).in(Singleton.class).ranked(100);
         bind(BoxClient.class).to(BoxClient.class).in(Singleton.class);
         bind(AuthManager.class).to(AuthManager.class);
         bind(AuthenticationService.class).to(AuthenticationService.class);
