@@ -30,17 +30,17 @@
         <dependency>
             <groupId>com.manywho.sdk</groupId>
             <artifactId>sdk-core</artifactId>
-            <version>1.25.0-SNAPSHOT</version>
+            <version>1.25.0-20161109.152841-9</version>
         </dependency>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
             <artifactId>sdk-client</artifactId>
-            <version>1.25.0-SNAPSHOT</version>
+            <version>1.25.0-20161109.152843-9</version>
         </dependency>
         <dependency>
             <groupId>com.manywho.sdk</groupId>
             <artifactId>sdk-test</artifactId>
-            <version>1.25.0-SNAPSHOT</version>
+            <version>1.25.0-20161109.152844-9</version>
         </dependency>
         <dependency>
             <groupId>com.github.manywho</groupId>
