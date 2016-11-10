@@ -183,8 +183,18 @@ public class DataManager {
     }
 
     public Object saveMetadataType(AuthenticatedWho user, ObjectDataRequest objectDataRequest) throws Exception {
+
+        String userAppId = cacheManager.getContextToUserApp(objectDataRequest.getStateId());
+
+        String token = user.getToken();
+
+        if (!StringUtils.isEmpty(userAppId)) {
+            BoxDeveloperEditionAPIConnection connection = boxFacade.createDeveloperApiUserConnection(userAppId);
+            token = connection.getAccessToken();
+        }
+
         return databaseSaveService.saveFileMetadata(
-                user.getToken(),
+                token,
                 objectDataRequest.getObjectDataType(),
                 objectDataRequest.getObjectData().get(0)
         );
