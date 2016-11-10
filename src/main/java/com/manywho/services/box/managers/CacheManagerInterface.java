@@ -51,4 +51,6 @@ public interface CacheManagerInterface {
     void saveContextToUserApp(String stateId, String userAppId) throws Exception;
 
     String getContextToUserApp(String stateId) throws Exception;
+
+    void deleteContextToUserApp(String stateId, String userAppId);
 }

@@ -25,6 +25,7 @@ public class ChangeContextUserApp extends AbstractAction {
     public DescribeValueCollection getServiceInputs() {
         DescribeValueCollection describeValues = new DescribeValueCollection();
         describeValues.add(new DescribeValue("User App ID", ContentType.String, false));
+        describeValues.add(new DescribeValue("Active", ContentType.Boolean, true));
 
         return describeValues;
     }

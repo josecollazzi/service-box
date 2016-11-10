@@ -38,8 +38,11 @@ public class ChangeContext extends AbstractController{
     @AuthorizationRequired
     public ServiceResponse changeToUserApp(ServiceRequest serviceRequest) throws Exception {
         ChangeContextToUserApp changeContextToUserApp = propertyParser.parse(serviceRequest.getInputs(), ChangeContextToUserApp.class);
-        cacheManager.saveContextToUserApp(serviceRequest.getStateId(), changeContextToUserApp.getUserAppId());
-
+        if(changeContextToUserApp.getActive()) {
+            cacheManager.saveContextToUserApp(serviceRequest.getStateId(), changeContextToUserApp.getUserAppId());
+        } else {
+            cacheManager.deleteContextToUserApp(serviceRequest.getStateId(), changeContextToUserApp.getUserAppId());
+        }
         return new ServiceResponse(InvokeType.Forward, serviceRequest.getToken());
     }
 }

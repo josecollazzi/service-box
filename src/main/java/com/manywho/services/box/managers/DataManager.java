@@ -1,11 +1,13 @@
 package com.manywho.services.box.managers;
 
+import com.box.sdk.BoxDeveloperEditionAPIConnection;
 import com.box.sdk.BoxSearchParameters;
 import com.manywho.sdk.entities.run.elements.type.*;
 import com.manywho.sdk.entities.run.elements.type.Object;
 import com.manywho.sdk.entities.security.AuthenticatedWho;
 import com.manywho.sdk.enums.CriteriaType;
 import com.manywho.services.box.entities.MetadataSearch;
+import com.manywho.services.box.facades.BoxFacadeInterface;
 import com.manywho.services.box.services.DatabaseLoadService;
 import com.manywho.services.box.services.DatabaseSaveService;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +27,12 @@ public class DataManager {
 
     @Inject
     private FileManager fileManager;
+
+    @Inject
+    private CacheManagerInterface cacheManager;
+
+    @Inject
+    private BoxFacadeInterface boxFacade;
 
     public ObjectCollection loadFileType(AuthenticatedWho user, ObjectDataRequest objectDataRequest) throws Exception {
         // Check if the load is for a single object with an identifier
@@ -60,9 +68,17 @@ public class DataManager {
     }
 
     public ObjectCollection loadFolderType(AuthenticatedWho user, ObjectDataRequest objectDataRequest) throws Exception {
-        // Check if the load is for a single object with an identifier
+        String userAppId = cacheManager.getContextToUserApp(objectDataRequest.getStateId());
+
+        String token = user.getToken();
+
+        if (!StringUtils.isEmpty(userAppId)) {
+            BoxDeveloperEditionAPIConnection connection = boxFacade.createDeveloperApiUserConnection(userAppId);
+            token = connection.getAccessToken();
+        }
+
         if (objectDataRequest.getListFilter() != null && StringUtils.isNotEmpty(objectDataRequest.getListFilter().getId())) {
-            return new ObjectCollection(databaseLoadService.loadFolder(user.getToken(), objectDataRequest.getListFilter().getId()));
+            return new ObjectCollection(databaseLoadService.loadFolder(token, objectDataRequest.getListFilter().getId()));
         }
 
         if(objectDataRequest.getListFilter() != null) {
@@ -93,7 +109,7 @@ public class DataManager {
             }
 
             boxSearchParameters.setContentTypes(contentTypes);
-            return databaseLoadService.loadFolder(user.getToken(), boxSearchParameters);
+            return databaseLoadService.loadFolder(token, boxSearchParameters);
         }
 
         throw new Exception("Loading a list of folders is not yet supported");
