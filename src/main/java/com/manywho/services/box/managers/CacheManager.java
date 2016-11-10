@@ -275,8 +275,6 @@ public class CacheManager implements CacheManagerInterface{
     }
 
     public void saveContextToUserApp(String stateId, String userAppId) throws JsonProcessingException {
-        //todo remove this hack when the bug with stateId is fixed
-        stateId = "demo";
         String key = String.format(REDIS_BOX_USERAPP_STATEID, stateId);
 
         try (Jedis jedis = jedisPool.getResource()) {
@@ -285,8 +283,6 @@ public class CacheManager implements CacheManagerInterface{
     }
 
     public void deleteContextToUserApp(String stateId, String userAppId) {
-        //todo remove this hack when the bug with stateId is fixed
-        stateId = "demo";
         String key = String.format(REDIS_BOX_USERAPP_STATEID, stateId);
 
         try (Jedis jedis = jedisPool.getResource()) {
@@ -295,8 +291,7 @@ public class CacheManager implements CacheManagerInterface{
     }
 
     public String getContextToUserApp(String stateId) throws Exception {
-        //todo remove this hack when the bug with stateId is fixed
-        stateId = "demo";
+
         try (Jedis jedis = jedisPool.getResource()) {
             String key = jedis.get(String.format(REDIS_BOX_USERAPP_STATEID, stateId));
 

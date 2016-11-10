@@ -35,9 +35,17 @@ public class DataManager {
     private BoxFacadeInterface boxFacade;
 
     public ObjectCollection loadFileType(AuthenticatedWho user, ObjectDataRequest objectDataRequest) throws Exception {
-        // Check if the load is for a single object with an identifier
+        String userAppId = cacheManager.getContextToUserApp(objectDataRequest.getStateId());
+
+        String token = user.getToken();
+
+        if (!StringUtils.isEmpty(userAppId)) {
+            BoxDeveloperEditionAPIConnection connection = boxFacade.createDeveloperApiUserConnection(userAppId);
+            token = connection.getAccessToken();
+        }
+
         if (objectDataRequest.getListFilter() != null && StringUtils.isNotEmpty(objectDataRequest.getListFilter().getId())) {
-            return new ObjectCollection(databaseLoadService.loadFile(user.getToken(), objectDataRequest.getListFilter().getId()));
+            return new ObjectCollection(databaseLoadService.loadFile(token, objectDataRequest.getListFilter().getId()));
         }
 
         // Try and get the folder to search in, if one was passed in as a filter otherwise use "0" (the root folder)
@@ -52,7 +60,7 @@ public class DataManager {
             }
         }
 
-        return databaseLoadService.loadFiles(user.getToken(), folder);
+        return databaseLoadService.loadFiles(token, folder);
     }
 
     public ObjectCollection loadFileSystem(AuthenticatedWho user, ObjectDataRequest objectDataRequest) throws Exception {
